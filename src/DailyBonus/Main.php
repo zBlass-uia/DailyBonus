@@ -8,14 +8,38 @@ use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as TF;
+use pocketmine\item\Item;
 
 class Main extends PluginBase {
 
     private $data;
+    private $starterItems;
 
     public function onEnable() {
         @mkdir($this->getDataFolder());
         $this->data = new Config($this->getDataFolder() . "players.yml", Config::YAML, []);
+        $this->starterItems = [
+            Item::get(Item::OAK_WOOD, 0, 16),
+            Item::get(Item::SPRUCE_WOOD, 0, 16),
+            Item::get(Item::WORKBENCH, 0, 1),
+            Item::get(Item::WOODEN_PICKAXE, 0, 1),
+            Item::get(Item::WOODEN_AXE, 0, 1),
+            Item::get(Item::WOODEN_SWORD, 0, 1),
+            Item::get(Item::WOODEN_SHOVEL, 0, 1),
+            Item::get(Item::TORCH, 0, 16),
+            Item::get(Item::BREAD, 0, 5),
+            Item::get(Item::SEEDS, 0, 10),
+            Item::get(Item::WHEAT, 0, 5),
+            Item::get(Item::DIRT, 0, 16),
+            Item::get(Item::STONE, 0, 16),
+            Item::get(Item::SAND, 0, 16),
+            Item::get(Item::COBBLESTONE, 0, 16),
+            Item::get(Item::APPLE, 0, 3),
+            Item::get(Item::WATER_BOTTLE, 0, 1),
+            Item::get(Item::STRING, 0, 5),
+            Item::get(Item::CLAY, 0, 4),
+            Item::get(Item::EGG, 0, 1),
+        ];
         $this->getLogger()->info(TF::GREEN . "DailyBonus habilitado.");
     }
 
@@ -54,6 +78,8 @@ class Main extends PluginBase {
     }
 
     private function darBonusDiario(Player $player) {
-        $player->sendMessage(TF::AQUA . "¡Recibiste tu bonus diario!");
+        $item = $this->starterItems[array_rand($this->starterItems)];
+        $player->getInventory()->addItem($item);
+        $player->sendMessage(TF::GOLD . $player->getName() . TF::RED . " ¡recibiste tu bonus diario: " . TF::GOLD . $item->getName() . TF::RED . "!");
     }
 }
