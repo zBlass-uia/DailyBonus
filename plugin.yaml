@@ -1,0 +1,10 @@
+name: DailyBonus
+main: DailyBonus\Main
+version: 1.0.0
+api: [2.0.0]
+author: tizzi32
+description: Allows players to claim a daily bonus
+commands:
+  daily:
+    description: Claim your daily bonus
+    usage: /daily
